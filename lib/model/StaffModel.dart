@@ -51,3 +51,5 @@ class StaffModel {
     "telepon": telepon,
   };
 }
+
+class StafInit extends StaffModel{}

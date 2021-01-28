@@ -33,6 +33,7 @@ dependencies:
   intl: ^0.15.7
   rxdart: ^0.22.2
   shared_preferences: ^0.4.2
+  flutter_bloc: ^0.21.0
 
 
 dev_dependencies:

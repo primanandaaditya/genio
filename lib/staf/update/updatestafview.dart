@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:manajemen/model/StaffModel.dart';
+import 'package:manajemen/staf/update/updatestafbloc.dart';
 import 'package:manajemen/staf/update/updatestafcontroller.dart';
 
-updatestafcontroller isc=updatestafcontroller();
-TextEditingController tecNIK=TextEditingController();
-TextEditingController tecNama=TextEditingController();
-TextEditingController tecEmail=TextEditingController();
-TextEditingController tecPassword=TextEditingController();
-TextEditingController tecTelepon=TextEditingController();
+UpdateStafBloc updateStafBloc;
 
 class UpdateStafView extends StatelessWidget {
 
@@ -18,7 +15,9 @@ class UpdateStafView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Edit Staf"),),
-      body: View(staffModel),
+      body: BlocProvider(builder: (context) => UpdateStafBloc(),
+        child: View(staffModel),
+      )
     );
   }
 }
@@ -34,11 +33,14 @@ class View extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    tecNIK.text = staffModel.nik;
-    tecNama.text = staffModel.nama;
-    tecTelepon.text = staffModel.telepon;
-    tecPassword.text = staffModel.password;
-    tecEmail.text = staffModel.email;
+    updateStafBloc = BlocProvider.of<UpdateStafBloc>(context);
+
+    updateStafBloc.id = staffModel.id;
+    updateStafBloc.tecNIK.text = staffModel.nik;
+    updateStafBloc.tecNama.text = staffModel.nama;
+    updateStafBloc.tecTelepon.text = staffModel.telepon;
+    updateStafBloc.tecPassword.text = staffModel.password;
+    updateStafBloc.tecEmail.text = staffModel.email;
 
     return Container(
       padding: EdgeInsets.all(20),
@@ -51,56 +53,66 @@ class View extends StatelessWidget {
                   icon: Icon(Icons.confirmation_number),
                   hintText: "NIK"
               ),
-              controller: tecNIK,
+              controller: updateStafBloc.tecNIK,
             ),
             TextFormField(
               decoration: InputDecoration(
                   icon: Icon(Icons.people),
                   hintText: "Nama staf"
               ),
-              controller: tecNama,
+              controller: updateStafBloc.tecNama,
             ),
             TextFormField(
               decoration: InputDecoration(
                   icon: Icon(Icons.email),
                   hintText: "Email"
               ),
-              controller: tecEmail,
+              controller: updateStafBloc.tecEmail,
             ),
             TextFormField(
               decoration: InputDecoration(
                   icon: Icon(Icons.security),
                   hintText: "Password"
               ),
-              controller: tecPassword,
+              controller: updateStafBloc.tecPassword,
             ),
             TextFormField(
               decoration: InputDecoration(
                 icon: Icon(Icons.phone),
                 hintText: "Nomor telepon"
               ),
-              controller: tecTelepon,
+              controller: updateStafBloc.tecTelepon,
             ),
             RaisedButton(
               color: Colors.deepOrange,
               onPressed: (){
-                isc.updateStaf(context,
-                    staffModel.id,
-                    tecNIK.text.toString(),
-                    tecNama.text.toString(),
-                    tecEmail.text.toString(),
-                    tecPassword.text.toString(),
-                    tecTelepon.text.toString());
-
-                // tecNIK.text="";
-                // tecNama.text="";
-                // tecEmail.text="";
-                // tecPassword.text="";
-                // tecTelepon.text="";
+                StaffModel model = updateStafBloc.createStafModel();
+                updateStafBloc.dispatch(model);
               },
               child: Text("Edit"),
               textColor: Colors.white,
-            )
+            ),
+
+            BlocListener(
+                bloc: updateStafBloc,
+                listener: (BuildContext context, int state) {
+                  if (state >=0) {
+                    updateStafBloc.snackBar(context);
+                  }
+                },
+
+                child: BlocBuilder<UpdateStafBloc, int>(
+                    builder: (context, hasil) {
+                      if (hasil==0){
+                        return Container();
+                      }else if (hasil != 0){
+                        return Container();
+                      }else{
+                        return Text("Gagal update!");
+                      }
+                    }
+                )
+            ),
 
           ],
         ),

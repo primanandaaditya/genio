@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:manajemen/helper/databasehelper.dart';
 import 'package:manajemen/staf/insert/insertstafview.dart';
 import 'package:manajemen/staf/list/liststaf.dart';
+import 'package:manajemen/user/list/listuser.dart';
 import 'package:manajemen/views/login.dart';
 import 'package:sqflite/sqflite.dart';
+
+import 'user/insert/insertuserview.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,6 +24,8 @@ class MyApp extends StatelessWidget {
         // When navigating to the "/second" route, build the SecondScreen widget.
         '/liststaf': (context) => ListStafView(),
         '/addstaf': (context) => InsertStafView(),
+        '/adduser': (context) => InsertUserView(),
+        '/listuser': (context) => ListUserView(),
       },
       theme: ThemeData(
 

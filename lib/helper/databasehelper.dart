@@ -1,3 +1,4 @@
+import 'package:manajemen/model/JoinModel.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 import 'dart:io';
@@ -14,6 +15,7 @@ class DatabaseHelper {
   String colId = "Id";
   String colNik = "Nik";
   String colNama = "Nama";
+  String colNamaStaf = "namaStaf";
   String colEmail = "Email";
   String colPassword = "Password";
   String colTelepon = "Telepon";
@@ -22,6 +24,8 @@ class DatabaseHelper {
   String colIdStaf = "idStaf";
   String colhakAkses="hakAkses";
   String colstatusAkun = "statusAkun";
+
+  String sqlJoin = "SELECT tabeluser.id, tabeluser.idStaf, tabelstaf.nama as namaStaf, tabeluser.statusAkun, tabelUser.hakAkses FROM tabelstaf INNER JOIN tabeluser ON tabeluser.idstaf = tabelstaf.id";
 
   DatabaseHelper._createInstance();
 
@@ -102,11 +106,27 @@ class DatabaseHelper {
     final Database db = await database;
     final List<Map<String, dynamic>> maps = await db.query(tabelUser);
     return List.generate(maps.length, (i) {
-      return UserModel(
+      return UserModel.withID(
           id: maps[i][colId],
           idStaf: maps[i][colIdStaf],
           hakAkses: maps[i][colhakAkses],
           statusAkun: maps[i][colstatusAkun],
+      );
+    });
+  }
+
+
+  Future<List<JoinModel>> joinModel() async {
+    final Database db = await database;
+
+    List<Map<String, dynamic>> maps = await db.rawQuery(sqlJoin);
+    return List.generate(maps.length, (i) {
+      return JoinModel(
+        id: maps[i][colId],
+        namaStaf: maps[i][colNamaStaf],
+        idStaf: maps[i][colIdStaf],
+        hakAkses: maps[i][colhakAkses],
+        statusAkun: maps[i][colstatusAkun],
       );
     });
   }

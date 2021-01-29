@@ -12,12 +12,6 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    // i.insertStaf(context, "20001", "Dewa", "dewa@genio.co.id", "merah", "0011");
-    // i.insertStaf(context, "20002", "Dewb", "dewa@genio.co.id", "merah", "0011");
-    // i.insertStaf(context, "20003", "Dewc", "dewa@genio.co.id", "merah", "0011");
-    // i.insertStaf(context, "20004", "Dewd", "dewa@genio.co.id", "merah", "0011");
-
-
     return Scaffold(
       appBar: AppBar(title: Text("Login"),),
       body: View(),
@@ -44,7 +38,7 @@ class View extends StatelessWidget {
             ),
             RaisedButton(
               onPressed: (){
-                Navigator.pushNamed(context, '/liststaf');
+                Navigator.pushNamed(context, '/listuser');
               },
               color: Colors.deepOrange,
               textColor: Colors.white,

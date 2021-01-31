@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:manajemen/model/JoinModel.dart';
 import 'package:manajemen/model/UserModel.dart';
+import 'package:manajemen/user/delete/deleteuserbloc.dart';
+import 'package:manajemen/user/insert/insertuserview.dart';
 import 'package:manajemen/user/list/listuserbloc.dart';
+import 'package:manajemen/user/update/updateuserview.dart';
 
 
 ListUserBloc listUserBloc;
+DeleteUserBloc deleteUserBloc;
 
 class ListUserView extends StatelessWidget {
   @override
@@ -15,6 +19,9 @@ class ListUserView extends StatelessWidget {
 
         BlocProvider<ListUserBloc>(
           builder: (BuildContext context) => ListUserBloc(),
+        ),
+        BlocProvider<DeleteUserBloc>(
+          builder: (BuildContext context) => DeleteUserBloc(),
         ),
       ],
       child: ListStaf(),
@@ -33,7 +40,7 @@ class _ListStafState extends State<ListStaf> {
   @override
   Widget build(BuildContext context) {
 
-
+    deleteUserBloc=BlocProvider.of<DeleteUserBloc>(context);
     listUserBloc = BlocProvider.of<ListUserBloc>(context);
     listUserBloc.dispatch(0);
 
@@ -42,8 +49,8 @@ class _ListStafState extends State<ListStaf> {
         child: Icon(Icons.add),
         backgroundColor: Colors.blue,
         onPressed: () async{
-         // await Navigator.push(context, MaterialPageRoute(builder: (context) => InsertStafView()),);
-         // listStafBloc.dispatch(0);
+         await Navigator.push(context, MaterialPageRoute(builder: (context) => InsertUserView()),);
+         listUserBloc.dispatch(0);
 
         },
       ),
@@ -59,8 +66,15 @@ class _ListStafState extends State<ListStaf> {
                       return ListTile(
                         leading: Icon(Icons.people),
                         subtitle:
-                        Text(hasil.elementAt(index).hakAkses.toString(), textAlign: TextAlign.left,
-                            textDirection: TextDirection.ltr),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                hasil.elementAt(index).hakAkses.toString()=="1"?Text("Admin"):Text("Tamu"),
+                                hasil.elementAt(index).statusAkun.toString()=="1"?Text("Aktif"):Text("Non aktif"),
+                              ],
+                            ),
+
                         title:
                         Text(hasil.elementAt(index).namaStaf.toString(), textAlign: TextAlign.left,
                             textDirection: TextDirection.ltr),
@@ -70,18 +84,19 @@ class _ListStafState extends State<ListStaf> {
                             IconButton(
                               onPressed: () async {
 
-                                // await Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(builder: (context) => UpdateStafView(hasil.elementAt(index))),
-                                // );
-                                // listStafBloc.dispatch(0);
+                                UserModel m = UserModel.withID(id: hasil.elementAt(index).id, idStaf: hasil.elementAt(index).idStaf, hakAkses: hasil.elementAt(index).hakAkses, statusAkun: hasil.elementAt(index).statusAkun  );
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => UpdateUserView(m)),
+                                );
+                                listUserBloc.dispatch(0);
                               },
                               icon: Icon(Icons.edit),
                             ),
                             IconButton(
                               icon: Icon(Icons.delete),
                               onPressed: (){
-                                // dialogHapus(context, hasil.elementAt(index).id);
+                                dialogHapus(context, hasil.elementAt(index).id);
                               },
                             )
                           ],
@@ -115,9 +130,9 @@ class _ListStafState extends State<ListStaf> {
             actions: <Widget>[
               FlatButton(
                   onPressed: (){
-                    // deleteStafBloc.dispatch(id);
+                    deleteUserBloc.dispatch(id);
                     Navigator.pop(context);
-                    // listStafBloc.dispatch(0);
+                    listUserBloc.dispatch(0);
                   },
                   child: Text("Ya")
               ),

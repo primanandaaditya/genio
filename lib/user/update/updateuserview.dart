@@ -3,29 +3,34 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:manajemen/model/StaffModel.dart';
 import 'package:manajemen/model/UserModel.dart';
 import 'package:manajemen/staf/list/liststafbloc.dart';
-import 'package:manajemen/user/insert/insertuserbloc.dart';
+import 'package:manajemen/user/update/updateuserbloc.dart';
 
 
-InsertUserBloc insertUserBloc;
+
+UpdateUserBloc updateUserBloc;
 ListStafBloc listStafBloc;
 List<DropdownMenuItem> list=List();
 
 
-class InsertUserView extends StatelessWidget {
+class UpdateUserView extends StatelessWidget {
+
+  UserModel _model;
+  UpdateUserView(this._model);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Tambah User"),),
+      appBar: AppBar(title: Text("Update User"),),
       body:  MultiBlocProvider(
         providers: [
           BlocProvider<ListStafBloc>(
             builder: (BuildContext context) => ListStafBloc(),
           ),
-          BlocProvider<InsertUserBloc>(
-            builder: (BuildContext context) => InsertUserBloc(),
+          BlocProvider<UpdateUserBloc>(
+            builder: (BuildContext context) => UpdateUserBloc(),
           ),
         ],
-        child: View(),
+        child: View(this._model),
       )
     );
   }
@@ -33,15 +38,21 @@ class InsertUserView extends StatelessWidget {
 
 class View extends StatelessWidget {
 
-
+  UserModel _model;
+  View(this._model);
 
   @override
   Widget build(BuildContext context) {
 
     list.clear();
-    insertUserBloc = BlocProvider.of<InsertUserBloc>(context);
+    updateUserBloc = BlocProvider.of<UpdateUserBloc>(context);
     listStafBloc = BlocProvider.of<ListStafBloc>(context);
     listStafBloc.dispatch(0);
+
+    updateUserBloc.id = this._model.id;
+    updateUserBloc.tecIdStaf = this._model.idStaf;
+    updateUserBloc.tecStatusAkun = int.parse( this._model.statusAkun.toString());
+    updateUserBloc.tecHakAkses = int.parse(this._model.hakAkses);
 
     return Container(
       padding: EdgeInsets.all(20),
@@ -69,9 +80,9 @@ class View extends StatelessWidget {
                         ),
                         items: list,
                         onChanged: (x){
-                          insertUserBloc.tecIdStaf=x;
+                          updateUserBloc.tecIdStaf=x;
                         },
-                        value: insertUserBloc.tecIdStaf,
+                        value: updateUserBloc.tecIdStaf,
                       ),
 
                       DropdownButtonFormField(
@@ -80,11 +91,11 @@ class View extends StatelessWidget {
                             icon: Icon(Icons.accessible_forward),
                             hintText: "Hak akses"
                         ),
-                        items: insertUserBloc.getHakAkses(),
+                        items: updateUserBloc.getHakAkses(),
                         onChanged: (x){
-                          insertUserBloc.tecHakAkses=x;
+                          updateUserBloc.tecHakAkses=x;
                         },
-                        value: insertUserBloc.tecHakAkses,
+                        value: updateUserBloc.tecHakAkses,
                       ),
 
                       DropdownButtonFormField(
@@ -93,11 +104,11 @@ class View extends StatelessWidget {
                             icon: Icon(Icons.account_box),
                             hintText: "Status akun",
                         ),
-                        items: insertUserBloc.getStatus(),
+                        items: updateUserBloc.getStatus(),
                         onChanged: (x){
-                          insertUserBloc.tecStatusAkun=x;
+                          updateUserBloc.tecStatusAkun=x;
                         },
-                        value: insertUserBloc.tecStatusAkun,
+                        value: updateUserBloc.tecStatusAkun,
                       ),
 
 
@@ -105,23 +116,23 @@ class View extends StatelessWidget {
                         color: Colors.deepOrange,
                         onPressed: (){
 
-                          UserModel model = insertUserBloc.createUserModel();
-                          insertUserBloc.dispatch(model);
+                          UserModel model = updateUserBloc.createUserModel();
+                          updateUserBloc.dispatch(model);
 
                         },
-                        child: Text("Simpan"),
+                        child: Text("Edit"),
                         textColor: Colors.white,
                       ),
 
                       BlocListener(
-                          bloc: insertUserBloc,
+                          bloc: updateUserBloc,
                           listener: (BuildContext context, int state) {
                             if (state >=0) {
-                              insertUserBloc.snackBar(context);
+                              updateUserBloc.snackBar(context);
                             }
                           },
 
-                          child: BlocBuilder<InsertUserBloc, int>(
+                          child: BlocBuilder<UpdateUserBloc, int>(
                               builder: (context, hasil) {
                                 if (hasil==0){
                                   return Container();

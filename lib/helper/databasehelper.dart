@@ -1,3 +1,4 @@
+import 'package:manajemen/helper/konstanstring.dart';
 import 'package:manajemen/model/JoinModel.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
@@ -26,6 +27,7 @@ class DatabaseHelper {
   String colstatusAkun = "statusAkun";
 
   String sqlJoin = "SELECT tabeluser.id, tabeluser.idStaf, tabelstaf.nama as namaStaf, tabeluser.statusAkun, tabelUser.hakAkses FROM tabelstaf INNER JOIN tabeluser ON tabeluser.idstaf = tabelstaf.id";
+
 
   DatabaseHelper._createInstance();
 
@@ -72,6 +74,64 @@ class DatabaseHelper {
 
   }
 
+  Future<String> doLogin(String email, String password) async {
+    Database db = await this.database;
+
+    //cari email di tabel staf
+    List<Map<String, dynamic>> cariEmail = await db.rawQuery("select * from tabelstaf where email = '$email'");
+
+    String hasil = "";
+    if (cariEmail.length==0){
+      hasil="Email tidak ditemukan";
+    }else{
+
+      //cari email dan password di tabel staf
+      List<Map<String, dynamic>> cariPassword = await db.rawQuery("SELECT * FROM tabelstaf WHERE email = '$email' AND password = '$password'");
+      if (cariPassword.length==0){
+        hasil = "Password atau email salah";
+      }else{
+        List<StaffModel> list = List.generate(cariPassword.length, (i) {
+          return StaffModel.withId(
+              id: cariPassword[i][colId],
+              nik: cariPassword[i][colNik],
+              nama: cariPassword[i][colNama],
+              email: cariPassword[i][colEmail],
+              password: cariPassword[i][colPassword],
+              telepon: cariPassword[i][colTelepon]
+          );
+        });
+
+        StaffModel staffModel = list.elementAt(0);
+        int idStaf = staffModel.id;
+
+        //cari di tabel staf
+        //apakah status akun aktif
+        List<Map<String, dynamic>> cariStatus = await db.rawQuery("SELECT * FROM tabeluser WHERE idStaf = $idStaf");
+        if (cariStatus.length==0){
+          hasil = "Akun tidak aktif, tidak bisa login";
+        }else{
+          List<UserModel> userList = List.generate(cariStatus.length, (i) {
+            return UserModel.withID(
+              id: cariStatus[i][colId],
+              idStaf: cariStatus[i][colIdStaf],
+              hakAkses: cariStatus[i][colhakAkses],
+              statusAkun: cariStatus[i][colstatusAkun],
+            );
+          });
+
+          UserModel userModel = userList.elementAt(0);
+          if (userModel.statusAkun == "1"){
+            hasil = KonstanString.LOGIN_OK;
+          }else{
+            hasil = "Akun tidak aktif, tidak bisa login";
+          }
+        }
+
+      }
+
+    }
+    return hasil;
+  }
 
 
 // Fetch Operation: Get all note objects from database

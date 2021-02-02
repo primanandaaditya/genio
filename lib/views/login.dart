@@ -5,11 +5,13 @@ import 'package:manajemen/helper/konstanstring.dart';
 import 'package:manajemen/staf/insert/insertStafController.dart';
 import 'package:manajemen/views/LoginModel.dart';
 import 'package:manajemen/views/dologinbloc.dart';
+import 'package:manajemen/views/spbloc.dart';
 
 final _formKey = GlobalKey<FormState>();
 TextEditingController tcEmail = TextEditingController();
 TextEditingController tcPassword = TextEditingController();
 DoLoginBloc doLoginBloc;
+SpBloc spBloc;
 
 
 class LoginView extends StatelessWidget {
@@ -30,6 +32,9 @@ class LoginView extends StatelessWidget {
           BlocProvider<DoLoginBloc>(
             builder: (BuildContext context) => DoLoginBloc(),
           ),
+          BlocProvider<SpBloc>(
+            builder: (BuildContext context) => SpBloc(),
+          ),
 
         ],
         child: View(),
@@ -43,6 +48,7 @@ class View extends StatelessWidget {
   Widget build(BuildContext context) {
 
     doLoginBloc = BlocProvider.of<DoLoginBloc>(context);
+    spBloc=BlocProvider.of<SpBloc>(context);
 
     return Container(
       padding: EdgeInsets.all(20),
@@ -72,8 +78,10 @@ class View extends StatelessWidget {
             BlocListener(
                 bloc: doLoginBloc,
                 listener: (BuildContext context, String state) {
-                  if (state == KonstanString.LOGIN_OK ) {
-                    Navigator.pushNamed(context, '/listuser');
+                  debugPrint(state);
+                  if (state == KonstanString.aksesAdmin || state == KonstanString.aksesTamu ) {
+                    spBloc.simpanJenisAkses(state.toString());
+                    Navigator.pushNamed(context, '/liststaf');
                   }else{
                     doLoginBloc.snackBar(context, state);
                   }

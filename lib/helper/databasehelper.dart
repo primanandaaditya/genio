@@ -82,13 +82,13 @@ class DatabaseHelper {
 
     String hasil = "";
     if (cariEmail.length==0){
-      hasil="Email tidak ditemukan";
+      hasil=KonstanString.emailNotFound;
     }else{
 
       //cari email dan password di tabel staf
       List<Map<String, dynamic>> cariPassword = await db.rawQuery("SELECT * FROM tabelstaf WHERE email = '$email' AND password = '$password'");
       if (cariPassword.length==0){
-        hasil = "Password atau email salah";
+        hasil = KonstanString.passwordEmailSalah;
       }else{
         List<StaffModel> list = List.generate(cariPassword.length, (i) {
           return StaffModel.withId(
@@ -108,7 +108,7 @@ class DatabaseHelper {
         //apakah status akun aktif
         List<Map<String, dynamic>> cariStatus = await db.rawQuery("SELECT * FROM tabeluser WHERE idStaf = $idStaf");
         if (cariStatus.length==0){
-          hasil = "Akun tidak aktif, tidak bisa login";
+          hasil = KonstanString.statusNonAktif;
         }else{
           List<UserModel> userList = List.generate(cariStatus.length, (i) {
             return UserModel.withID(
@@ -120,15 +120,13 @@ class DatabaseHelper {
           });
 
           UserModel userModel = userList.elementAt(0);
-          if (userModel.statusAkun == "1"){
-            hasil = KonstanString.LOGIN_OK;
+          if (userModel.statusAkun == KonstanString.statusAktif){
+            hasil = userModel.hakAkses;
           }else{
-            hasil = "Akun tidak aktif, tidak bisa login";
+            hasil = KonstanString.akunTidakAktif;
           }
         }
-
       }
-
     }
     return hasil;
   }

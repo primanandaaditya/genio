@@ -35,4 +35,10 @@ class SpBloc extends Bloc<int,String>{
     sp.setString(KonstanString.jenisAkses, string);
   }
 
+  void logout() async{
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    sp.setString(KonstanString.jenisAkses, "");
+  }
+
+
 }

@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:manajemen/helper/databasehelper.dart';
 import 'package:manajemen/helper/konstanstring.dart';
-import 'package:manajemen/staf/insert/insertStafController.dart';
 import 'package:manajemen/views/LoginModel.dart';
 import 'package:manajemen/views/dologinbloc.dart';
 import 'package:manajemen/views/spbloc.dart';
 
 final _formKey = GlobalKey<FormState>();
-TextEditingController tcEmail = TextEditingController();
-TextEditingController tcPassword = TextEditingController();
 DoLoginBloc doLoginBloc;
 SpBloc spBloc;
 
@@ -17,12 +13,6 @@ SpBloc spBloc;
 class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
-    // DatabaseHelper databaseHelper=DatabaseHelper();
-    // databaseHelper.doLogin("edit@gmail.comx", "editx").then((value) {
-    //   debugPrint("hasil : " + value.toString());
-    // });
-
 
     return Scaffold(
       appBar: AppBar(title: Text("Login"),),
@@ -81,7 +71,7 @@ class View extends StatelessWidget {
                   debugPrint(state);
                   if (state == KonstanString.aksesAdmin || state == KonstanString.aksesTamu ) {
                     spBloc.simpanJenisAkses(state.toString());
-                    Navigator.pushNamed(context, '/liststaf');
+                    Navigator.pushNamed(context, '/home');
                   }else{
                     doLoginBloc.snackBar(context, state);
                   }

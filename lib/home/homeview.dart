@@ -46,6 +46,21 @@ class View extends StatelessWidget {
                     onTap: (){
                       Navigator.pushNamed(context, "/liststaf");
                     },
+                  ),
+
+                  InkWell(
+                    child: ItemList("images/programmer.png","Daftar User","Manajemen para user (Create,Read,Update,Delete)"),
+                    onTap: (){
+                      Navigator.pushNamed(context, "/listuser");
+                    },
+                  ),
+
+                  InkWell(
+                    child: ItemList("images/arrow.png","Logout","Login dengan email lain"),
+                    onTap: (){
+                      spBloc.logout();
+                      Navigator.popAndPushNamed(context, "/login");
+                    },
                   )
 
                 ],

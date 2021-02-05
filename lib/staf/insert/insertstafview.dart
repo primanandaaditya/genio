@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:manajemen/helper/konstanstring.dart';
 import 'package:manajemen/model/StaffModel.dart';
 import 'package:manajemen/staf/insert/insertstafbloc.dart';
 
 InsertStafBloc insertStafBloc;
+final _formKey = GlobalKey<FormState>();
 
 class InsertStafView extends StatelessWidget {
   @override
@@ -26,6 +28,7 @@ class View extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(20),
       child: Form(
+        key: _formKey,
         child: ListView(
           children: <Widget>[
 
@@ -42,6 +45,12 @@ class View extends StatelessWidget {
                   hintText: "Nama staf"
               ),
               controller: insertStafBloc.tecNama,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return KonstanString.kolomHarusDiisi;
+                }
+                return null;
+              },
             ),
             TextFormField(
               decoration: InputDecoration(
@@ -49,6 +58,12 @@ class View extends StatelessWidget {
                   hintText: "Email"
               ),
               controller: insertStafBloc.tecEmail,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return KonstanString.kolomHarusDiisi;
+                }
+                return null;
+              },
             ),
             TextFormField(
               decoration: InputDecoration(
@@ -56,6 +71,12 @@ class View extends StatelessWidget {
                   hintText: "Password"
               ),
               controller: insertStafBloc.tecPassword,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return KonstanString.kolomHarusDiisi;
+                }
+                return null;
+              },
             ),
             TextFormField(
               decoration: InputDecoration(
@@ -67,11 +88,11 @@ class View extends StatelessWidget {
             RaisedButton(
               color: Colors.deepOrange,
               onPressed: (){
-
-                StaffModel model = insertStafBloc.createStafModel();
-                insertStafBloc.dispatch(model);
-                insertStafBloc.kosongkan();
-
+                if (_formKey.currentState.validate()) {
+                  StaffModel model = insertStafBloc.createStafModel();
+                  insertStafBloc.dispatch(model);
+                  insertStafBloc.kosongkan();
+                }
               },
               child: Text("Simpan"),
               textColor: Colors.white,

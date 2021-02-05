@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:manajemen/helper/konstanstring.dart';
 import 'package:manajemen/model/StaffModel.dart';
 import 'package:manajemen/staf/update/updatestafbloc.dart';
 import 'package:manajemen/staf/update/updatestafcontroller.dart';
 
 UpdateStafBloc updateStafBloc;
+final _formKey = GlobalKey<FormState>();
 
 class UpdateStafView extends StatelessWidget {
 
@@ -45,6 +47,7 @@ class View extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(20),
       child: Form(
+        key: _formKey,
         child: ListView(
           children: <Widget>[
 
@@ -61,6 +64,12 @@ class View extends StatelessWidget {
                   hintText: "Nama staf"
               ),
               controller: updateStafBloc.tecNama,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return KonstanString.kolomHarusDiisi;
+                }
+                return null;
+              },
             ),
             TextFormField(
               decoration: InputDecoration(
@@ -68,6 +77,12 @@ class View extends StatelessWidget {
                   hintText: "Email"
               ),
               controller: updateStafBloc.tecEmail,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return KonstanString.kolomHarusDiisi;
+                }
+                return null;
+              },
             ),
             TextFormField(
               decoration: InputDecoration(
@@ -75,6 +90,12 @@ class View extends StatelessWidget {
                   hintText: "Password"
               ),
               controller: updateStafBloc.tecPassword,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return KonstanString.kolomHarusDiisi;
+                }
+                return null;
+              },
             ),
             TextFormField(
               decoration: InputDecoration(
@@ -86,8 +107,11 @@ class View extends StatelessWidget {
             RaisedButton(
               color: Colors.deepOrange,
               onPressed: (){
-                StaffModel model = updateStafBloc.createStafModel();
-                updateStafBloc.dispatch(model);
+
+                if (_formKey.currentState.validate()) {
+                  StaffModel model = updateStafBloc.createStafModel();
+                  updateStafBloc.dispatch(model);
+                }
               },
               child: Text("Edit"),
               textColor: Colors.white,

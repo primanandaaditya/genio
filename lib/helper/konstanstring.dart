@@ -9,5 +9,6 @@ class KonstanString{
   static final String emailNotFound="Email tidak ditemukan";
   static final String jenisAkses = "akses";
   static final String jenisAksesTidakDiketahui = "-1";
+  static final String kolomHarusDiisi = "Kolom ini harus diisi";
 
 }

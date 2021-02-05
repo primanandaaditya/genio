@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:manajemen/helper/konstanstring.dart';
 import 'package:manajemen/model/StaffModel.dart';
 import 'package:manajemen/model/UserModel.dart';
 import 'package:manajemen/staf/list/liststafbloc.dart';
@@ -10,6 +11,7 @@ import 'package:manajemen/user/update/updateuserbloc.dart';
 UpdateUserBloc updateUserBloc;
 ListStafBloc listStafBloc;
 List<DropdownMenuItem> list=List();
+final _formKey = GlobalKey<FormState>();
 
 
 class UpdateUserView extends StatelessWidget {
@@ -69,6 +71,7 @@ class View extends StatelessWidget {
 
               return
                 Form(
+                  key: _formKey,
                   child: ListView(
                     children: <Widget>[
 
@@ -83,6 +86,12 @@ class View extends StatelessWidget {
                           updateUserBloc.tecIdStaf=x;
                         },
                         value: updateUserBloc.tecIdStaf,
+                        validator: (value) {
+                          if (value.toString().isEmpty || value==null) {
+                            return KonstanString.kolomHarusDiisi;
+                          }
+                          return null;
+                        },
                       ),
 
                       DropdownButtonFormField(
@@ -96,6 +105,12 @@ class View extends StatelessWidget {
                           updateUserBloc.tecHakAkses=x;
                         },
                         value: updateUserBloc.tecHakAkses,
+                        validator: (value) {
+                          if (value.toString().isEmpty || value==null) {
+                            return KonstanString.kolomHarusDiisi;
+                          }
+                          return null;
+                        },
                       ),
 
                       DropdownButtonFormField(
@@ -109,16 +124,22 @@ class View extends StatelessWidget {
                           updateUserBloc.tecStatusAkun=x;
                         },
                         value: updateUserBloc.tecStatusAkun,
+                        validator: (value) {
+                          if (value.toString().isEmpty || value==null) {
+                            return KonstanString.kolomHarusDiisi;
+                          }
+                          return null;
+                        },
                       ),
 
 
                       RaisedButton(
                         color: Colors.deepOrange,
                         onPressed: (){
-
-                          UserModel model = updateUserBloc.createUserModel();
-                          updateUserBloc.dispatch(model);
-
+                          if (_formKey.currentState.validate()) {
+                            UserModel model = updateUserBloc.createUserModel();
+                            updateUserBloc.dispatch(model);
+                          }
                         },
                         child: Text("Edit"),
                         textColor: Colors.white,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:manajemen/helper/konstanstring.dart';
 import 'package:manajemen/model/StaffModel.dart';
 import 'package:manajemen/model/UserModel.dart';
 import 'package:manajemen/staf/list/liststafbloc.dart';
@@ -9,6 +10,7 @@ import 'package:manajemen/user/insert/insertuserbloc.dart';
 InsertUserBloc insertUserBloc;
 ListStafBloc listStafBloc;
 List<DropdownMenuItem> list=List();
+final _formKey = GlobalKey<FormState>();
 
 
 class InsertUserView extends StatelessWidget {
@@ -33,8 +35,6 @@ class InsertUserView extends StatelessWidget {
 
 class View extends StatelessWidget {
 
-
-
   @override
   Widget build(BuildContext context) {
 
@@ -58,6 +58,7 @@ class View extends StatelessWidget {
 
               return
                 Form(
+                  key: _formKey,
                   child: ListView(
                     children: <Widget>[
 
@@ -72,6 +73,12 @@ class View extends StatelessWidget {
                           insertUserBloc.tecIdStaf=x;
                         },
                         value: insertUserBloc.tecIdStaf,
+                        validator: (value) {
+                          if (value.toString().isEmpty || value==null) {
+                            return KonstanString.kolomHarusDiisi;
+                          }
+                          return null;
+                        },
                       ),
 
                       DropdownButtonFormField(
@@ -85,6 +92,12 @@ class View extends StatelessWidget {
                           insertUserBloc.tecHakAkses=x;
                         },
                         value: insertUserBloc.tecHakAkses,
+                        validator: (value) {
+                          if (value.toString().isEmpty) {
+                            return KonstanString.kolomHarusDiisi;
+                          }
+                          return null;
+                        },
                       ),
 
                       DropdownButtonFormField(
@@ -98,16 +111,22 @@ class View extends StatelessWidget {
                           insertUserBloc.tecStatusAkun=x;
                         },
                         value: insertUserBloc.tecStatusAkun,
+                        validator: (value) {
+                          if (value.toString().isEmpty) {
+                            return KonstanString.kolomHarusDiisi;
+                          }
+                          return null;
+                        },
                       ),
 
 
                       RaisedButton(
                         color: Colors.deepOrange,
                         onPressed: (){
-
-                          UserModel model = insertUserBloc.createUserModel();
-                          insertUserBloc.dispatch(model);
-
+                          if (_formKey.currentState.validate()) {
+                            UserModel model = insertUserBloc.createUserModel();
+                            insertUserBloc.dispatch(model);
+                          }
                         },
                         child: Text("Simpan"),
                         textColor: Colors.white,

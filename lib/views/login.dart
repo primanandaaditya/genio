@@ -48,17 +48,30 @@ class View extends StatelessWidget {
           children: <Widget>[
 
             TextFormField(
+              validator: (value) {
+                if (value.isEmpty) {
+                  return KonstanString.kolomHarusDiisi;
+                }
+                return null;
+              },
               controller: doLoginBloc.tecEmail,
             ),
             TextFormField(
+              validator: (value) {
+                if (value.isEmpty) {
+                  return KonstanString.kolomHarusDiisi;
+                }
+                return null;
+              },
               controller: doLoginBloc.tecPassword,
               obscureText: true,
             ),
             RaisedButton(
               onPressed: (){
-                LoginModel l = doLoginBloc.createLoginModel();
-                doLoginBloc.dispatch(l);
-
+                if (_formKey.currentState.validate()) {
+                  LoginModel l = doLoginBloc.createLoginModel();
+                  doLoginBloc.dispatch(l);
+                }
               },
               color: Colors.deepOrange,
               textColor: Colors.white,
@@ -71,7 +84,7 @@ class View extends StatelessWidget {
                   debugPrint(state);
                   if (state == KonstanString.aksesAdmin || state == KonstanString.aksesTamu ) {
                     spBloc.simpanJenisAkses(state.toString());
-                    Navigator.pushNamed(context, '/home');
+                    Navigator.popAndPushNamed(context, '/home');
                   }else{
                     doLoginBloc.snackBar(context, state);
                   }

@@ -15,20 +15,20 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(title: Text("Login"),),
-      body: MultiBlocProvider(
-        providers: [
 
-          BlocProvider<DoLoginBloc>(
-            builder: (BuildContext context) => DoLoginBloc(),
-          ),
-          BlocProvider<SpBloc>(
-            builder: (BuildContext context) => SpBloc(),
-          ),
+        body: MultiBlocProvider(
+          providers: [
 
-        ],
-        child: View(),
-      )
+            BlocProvider<DoLoginBloc>(
+              builder: (BuildContext context) => DoLoginBloc(),
+            ),
+            BlocProvider<SpBloc>(
+              builder: (BuildContext context) => SpBloc(),
+            ),
+
+          ],
+          child: View(),
+        )
     );
   }
 }
@@ -41,69 +41,69 @@ class View extends StatelessWidget {
     spBloc=BlocProvider.of<SpBloc>(context);
 
     return Container(
-      padding: EdgeInsets.all(20),
-      child: Form(
-        key: _formKey,
-        child: ListView(
-          children: <Widget>[
 
-            TextFormField(
-              validator: (value) {
-                if (value.isEmpty) {
-                  return KonstanString.kolomHarusDiisi;
-                }
-                return null;
-              },
-              controller: doLoginBloc.tecEmail,
-            ),
-            TextFormField(
-              validator: (value) {
-                if (value.isEmpty) {
-                  return KonstanString.kolomHarusDiisi;
-                }
-                return null;
-              },
-              controller: doLoginBloc.tecPassword,
-              obscureText: true,
-            ),
-            RaisedButton(
-              onPressed: (){
-                if (_formKey.currentState.validate()) {
-                  LoginModel l = doLoginBloc.createLoginModel();
-                  doLoginBloc.dispatch(l);
-                }
-              },
-              color: Colors.deepOrange,
-              textColor: Colors.white,
-              child: Text("Login"),
-            ),
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: <Widget>[
 
-            BlocListener(
-                bloc: doLoginBloc,
-                listener: (BuildContext context, String state) {
-                  debugPrint(state);
-                  if (state == KonstanString.aksesAdmin || state == KonstanString.aksesTamu ) {
-                    spBloc.simpanJenisAkses(state.toString());
-                    Navigator.popAndPushNamed(context, '/home');
-                  }else{
-                    doLoginBloc.snackBar(context, state);
+              TextFormField(
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return KonstanString.kolomHarusDiisi;
+                  }
+                  return null;
+                },
+                controller: doLoginBloc.tecEmail,
+              ),
+              TextFormField(
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return KonstanString.kolomHarusDiisi;
+                  }
+                  return null;
+                },
+                controller: doLoginBloc.tecPassword,
+                obscureText: true,
+              ),
+              RaisedButton(
+                onPressed: (){
+                  if (_formKey.currentState.validate()) {
+                    LoginModel l = doLoginBloc.createLoginModel();
+                    doLoginBloc.dispatch(l);
                   }
                 },
+                color: Colors.deepOrange,
+                textColor: Colors.white,
+                child: Text("Login"),
+              ),
 
-                child: BlocBuilder<DoLoginBloc, String>(
-                    builder: (context, hasil) {
-                      if (hasil==  KonstanString.LOGIN_OK){
-                        return Container();
-                      }else{
-                        return Container();
-                      }
+              BlocListener(
+                  bloc: doLoginBloc,
+                  listener: (BuildContext context, String state) {
+                    debugPrint(state);
+                    if (state == KonstanString.aksesAdmin || state == KonstanString.aksesTamu ) {
+                      spBloc.simpanJenisAkses(state.toString());
+                      Navigator.popAndPushNamed(context, '/home');
+                    }else{
+                      doLoginBloc.snackBar(context, state);
                     }
-                )
-            ),
+                  },
 
-          ],
-        ),
-      )
+                  child: BlocBuilder<DoLoginBloc, String>(
+                      builder: (context, hasil) {
+                        if (hasil==  KonstanString.LOGIN_OK){
+                          return Container();
+                        }else{
+                          return Container();
+                        }
+                      }
+                  )
+              ),
+
+            ],
+          ),
+        )
     );
   }
 }

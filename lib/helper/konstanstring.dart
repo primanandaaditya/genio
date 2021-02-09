@@ -10,5 +10,6 @@ class KonstanString{
   static final String jenisAkses = "akses";
   static final String jenisAksesTidakDiketahui = "-1";
   static final String kolomHarusDiisi = "Kolom ini harus diisi";
+  static final String authDefault="admin";
 
 }

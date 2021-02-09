@@ -7,6 +7,7 @@ import 'package:manajemen/user/list/listuser.dart';
 import 'package:manajemen/views/login.dart';
 import 'package:sqflite/sqflite.dart';
 
+import 'helper/warna.dart';
 import 'user/insert/insertuserview.dart';
 
 void main() {
@@ -31,9 +32,44 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginView()
       },
       theme: ThemeData(
-
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        fontFamily: 'SG',
+        appBarTheme: AppBarTheme(
+          color: Warna.kuning,
+        ),
+        cardColor: Warna.kuning,
+        scaffoldBackgroundColor: Warna.hitam1,
+        buttonColor: Warna.kuning,
+        primaryColor: Warna.pink,
+        backgroundColor: Warna.hitam1,
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: Warna.kuning,
+          foregroundColor: Warna.hitam2,
+          splashColor: Warna.kuning
+        ),
+        iconTheme: IconThemeData(
+          color: Warna.pink
+        ),
+        hintColor: Warna.pink,
+
+
+        inputDecorationTheme: InputDecorationTheme(
+          labelStyle: TextStyle(
+            color: Warna.putih
+          ),
+
+
+          focusColor: Warna.kuning,
+            // border: new OutlineInputBorder(
+            //   borderRadius: const BorderRadius.all(
+            //     const Radius.circular(15.0),
+            //   ),
+            // ),
+            // filled: true,
+
+            fillColor: Warna.hitam2),
+
       ),
       home: LoginView(),
     );

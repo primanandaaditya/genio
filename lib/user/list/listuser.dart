@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:manajemen/helper/konstanstring.dart';
+import 'package:manajemen/helper/warna.dart';
 import 'package:manajemen/model/JoinModel.dart';
 import 'package:manajemen/model/UserModel.dart';
 import 'package:manajemen/user/delete/deleteuserbloc.dart';
@@ -57,7 +58,7 @@ class _ListStafState extends State<ListStaf> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        backgroundColor: Colors.blue,
+
         onPressed: () async{
          await Navigator.push(context, MaterialPageRoute(builder: (context) => InsertUserView()),);
          listUserBloc.dispatch(0);
@@ -80,20 +81,20 @@ class _ListStafState extends State<ListStaf> {
                         return ListView.separated(
                             itemBuilder: (context, index) {
                               return ListTile(
-                                leading: Icon(Icons.people),
+                                leading: Icon(Icons.people, color: Warna.pink,),
                                 subtitle:
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    hasil.elementAt(index).hakAkses.toString()=="1"?Text("Admin"):Text("Tamu"),
-                                    hasil.elementAt(index).statusAkun.toString()=="1"?Text("Aktif"):Text("Non aktif"),
+                                    hasil.elementAt(index).hakAkses.toString()=="1"?Text("Admin", style: TextStyle(color: Warna.pink)):Text("Tamu", style: TextStyle(color: Warna.pink)),
+                                    hasil.elementAt(index).statusAkun.toString()=="1"?Text("Aktif", style: TextStyle(color: Warna.pink)):Text("Non aktif", style: TextStyle(color: Warna.pink)),
                                   ],
                                 ),
 
                                 title:
                                 Text(hasil.elementAt(index).namaStaf.toString(), textAlign: TextAlign.left,
-                                    textDirection: TextDirection.ltr),
+                                    textDirection: TextDirection.ltr, style: TextStyle(color: Colors.white),),
                                 trailing: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: <Widget>[
@@ -107,11 +108,11 @@ class _ListStafState extends State<ListStaf> {
                                         );
                                         listUserBloc.dispatch(0);
                                       },
-                                      icon: Icon(Icons.edit),
+                                      icon: Icon(Icons.edit, color: Warna.pink,),
                                     ),
                                     jenisAkses == KonstanString.aksesAdmin ?
                                     IconButton(
-                                      icon: Icon(Icons.delete),
+                                      icon: Icon(Icons.delete, color: Warna.pink,),
                                       onPressed: (){
                                         dialogHapus(context, hasil.elementAt(index).id);
                                       },

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:manajemen/helper/konstanstring.dart';
+import 'package:manajemen/helper/warna.dart';
 import 'package:manajemen/model/StaffModel.dart';
 import 'package:manajemen/model/UserModel.dart';
 import 'package:manajemen/staf/list/liststafbloc.dart';
@@ -65,7 +66,7 @@ class View extends StatelessWidget {
                       DropdownButtonFormField(
                         decoration: InputDecoration(
                           labelText: "Pilih staf",
-                          icon: Icon(Icons.people),
+                          icon: Icon(Icons.people, color: Warna.pink,),
                           hintText: "Pilih staf"
                         ),
                         items: list,
@@ -79,12 +80,16 @@ class View extends StatelessWidget {
                           }
                           return null;
                         },
+                        style: TextStyle(
+                            color: Colors.blue
+                        ),
+
                       ),
 
                       DropdownButtonFormField(
                         decoration: InputDecoration(
                           labelText: "Hak akses",
-                            icon: Icon(Icons.accessible_forward),
+                            icon: Icon(Icons.accessible_forward, color: Warna.pink,),
                             hintText: "Hak akses"
                         ),
                         items: insertUserBloc.getHakAkses(),
@@ -98,12 +103,15 @@ class View extends StatelessWidget {
                           }
                           return null;
                         },
+                        style: TextStyle(
+                            color: Colors.blue
+                        ),
                       ),
 
                       DropdownButtonFormField(
                         decoration: InputDecoration(
                           labelText: "Status akun",
-                            icon: Icon(Icons.account_box),
+                            icon: Icon(Icons.account_box, color: Warna.pink,),
                             hintText: "Status akun",
                         ),
                         items: insertUserBloc.getStatus(),
@@ -117,11 +125,17 @@ class View extends StatelessWidget {
                           }
                           return null;
                         },
+                        style: TextStyle(
+                            color: Colors.blue
+                        ),
                       ),
 
+                      Padding(
+                        padding: EdgeInsets.only(top: 20),
+                      ),
 
                       RaisedButton(
-                        color: Colors.deepOrange,
+
                         onPressed: (){
                           if (_formKey.currentState.validate()) {
                             UserModel model = insertUserBloc.createUserModel();
@@ -129,7 +143,7 @@ class View extends StatelessWidget {
                           }
                         },
                         child: Text("Simpan"),
-                        textColor: Colors.white,
+
                       ),
 
                       BlocListener(

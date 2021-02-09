@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:manajemen/helper/konstanstring.dart';
+import 'package:manajemen/helper/warna.dart';
 import 'package:manajemen/model/StaffModel.dart';
 import 'package:manajemen/staf/insert/insertstafview.dart';
 import 'package:manajemen/staf/list/deletestafbloc.dart';
@@ -54,7 +55,6 @@ class _ListStafState extends State<ListStaf> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        backgroundColor: Colors.blue,
         onPressed: () async{
          await Navigator.push(context, MaterialPageRoute(builder: (context) => InsertStafView()),);
          listStafBloc.dispatch(0);
@@ -76,13 +76,13 @@ class _ListStafState extends State<ListStaf> {
                         return ListView.separated(
                             itemBuilder: (context, index) {
                               return ListTile(
-                                leading: Icon(Icons.people),
+                                leading: Icon(Icons.people, color: Warna.pink,),
                                 subtitle:
                                 Text(hasil.elementAt(index).email, textAlign: TextAlign.left,
-                                    textDirection: TextDirection.ltr),
+                                    textDirection: TextDirection.ltr, style: TextStyle(color: Warna.pink),),
                                 title:
                                 Text(hasil.elementAt(index).nama, textAlign: TextAlign.left,
-                                    textDirection: TextDirection.ltr),
+                                    textDirection: TextDirection.ltr, style: TextStyle(color: Warna.pink),),
                                 trailing: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: <Widget>[
@@ -95,11 +95,11 @@ class _ListStafState extends State<ListStaf> {
                                         );
                                         listStafBloc.dispatch(0);
                                       },
-                                      icon: Icon(Icons.edit),
+                                      icon: Icon(Icons.edit, color: Warna.pink,),
                                     ),
                                     jenisAkses==KonstanString.aksesAdmin?
                                     IconButton(
-                                      icon: Icon(Icons.delete),
+                                      icon: Icon(Icons.delete, color: Warna.pink),
                                       onPressed: (){
                                         dialogHapus(context, hasil.elementAt(index).id);
                                       },

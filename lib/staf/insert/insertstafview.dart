@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:manajemen/helper/konstanstring.dart';
+import 'package:manajemen/helper/warna.dart';
 import 'package:manajemen/model/StaffModel.dart';
 import 'package:manajemen/staf/insert/insertstafbloc.dart';
 
@@ -34,15 +35,24 @@ class View extends StatelessWidget {
 
             TextFormField(
               decoration: InputDecoration(
-                  icon: Icon(Icons.confirmation_number),
-                  hintText: "NIK"
+                  icon: Icon(Icons.confirmation_number, color: Warna.putih,),
+                  hintText: "NIK",
+
               ),
               controller: insertStafBloc.tecNIK,
+              style: TextStyle(
+                  color: Colors.white
+              ),
             ),
+
             TextFormField(
+
               decoration: InputDecoration(
-                  icon: Icon(Icons.people),
+                  icon: Icon(Icons.people, color: Warna.putih,),
                   hintText: "Nama staf"
+              ),
+              style: TextStyle(
+                  color: Colors.white
               ),
               controller: insertStafBloc.tecNama,
               validator: (value) {
@@ -54,8 +64,11 @@ class View extends StatelessWidget {
             ),
             TextFormField(
               decoration: InputDecoration(
-                  icon: Icon(Icons.email),
+                  icon: Icon(Icons.email, color: Warna.putih,),
                   hintText: "Email"
+              ),
+              style: TextStyle(
+                  color: Colors.white
               ),
               controller: insertStafBloc.tecEmail,
               validator: (value) {
@@ -67,8 +80,11 @@ class View extends StatelessWidget {
             ),
             TextFormField(
               decoration: InputDecoration(
-                  icon: Icon(Icons.security),
+                  icon: Icon(Icons.security, color: Warna.putih,),
                   hintText: "Password"
+              ),
+              style: TextStyle(
+                  color: Colors.white
               ),
               controller: insertStafBloc.tecPassword,
               validator: (value) {
@@ -79,14 +95,22 @@ class View extends StatelessWidget {
               },
             ),
             TextFormField(
+              style: TextStyle(
+                  color: Colors.white
+              ),
               decoration: InputDecoration(
-                icon: Icon(Icons.phone),
+                icon: Icon(Icons.phone, color: Warna.putih,),
                 hintText: "Nomor telepon"
               ),
               controller: insertStafBloc.tecTelepon,
             ),
+
+            Padding(
+              padding: EdgeInsets.only(top: 20),
+            ),
+
             RaisedButton(
-              color: Colors.deepOrange,
+
               onPressed: (){
                 if (_formKey.currentState.validate()) {
                   StaffModel model = insertStafBloc.createStafModel();
@@ -95,7 +119,6 @@ class View extends StatelessWidget {
                 }
               },
               child: Text("Simpan"),
-              textColor: Colors.white,
             ),
 
             BlocListener(

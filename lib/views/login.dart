@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:manajemen/clipper/BottomWaveClipper.dart';
 import 'package:manajemen/helper/konstanstring.dart';
 import 'package:manajemen/helper/warna.dart';
 import 'package:manajemen/views/LoginModel.dart';
@@ -41,123 +42,146 @@ class View extends StatelessWidget {
     doLoginBloc = BlocProvider.of<DoLoginBloc>(context);
     spBloc=BlocProvider.of<SpBloc>(context);
 
-    return Container(
-      padding: EdgeInsets.all(40),
-      color: Warna.hitam1,
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: <Widget>[
+    return Stack(
 
-              Text("LOGIN",
-                textAlign: TextAlign.center,
+      children: <Widget>[
 
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Warna.pink
-                ),
-              ),
-
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-
-              TextFormField(
-
-                decoration: InputDecoration(
-                  icon: Icon(Icons.people, color: Colors.white,),
-                  labelText: "Username",
-
-                ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return KonstanString.kolomHarusDiisi;
-                  }
-                  return null;
-                },
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-                controller: doLoginBloc.tecEmail,
-              ),
-
-              TextFormField(
-
-                decoration: InputDecoration(
-                    icon: Icon(Icons.vpn_key, color: Colors.white,),
-                    labelText: "Password",
-                ),
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return KonstanString.kolomHarusDiisi;
-                  }
-                  return null;
-                },
-                style: TextStyle(
-                  color: Colors.white
-                ),
-                controller: doLoginBloc.tecPassword,
-                obscureText: true,
-              ),
-
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-
-              SizedBox(
-                // height: 60,
-                width: 30,
-                child: RaisedButton(
-
-                  // padding: EdgeInsets.all(10),
-                  // shape: RoundedRectangleBorder(
-                  //     borderRadius: new BorderRadius.circular(18.0),
-                  //     side: BorderSide(color: Warna.kuning)
-                  // ),
-                  onPressed: (){
-                    if (_formKey.currentState.validate()) {
-                      LoginModel l = doLoginBloc.createLoginModel();
-                      doLoginBloc.dispatch(l);
-                    }
-                  },
-
-                  child: Text("LOGIN"),
-                ),
-              ),
-
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-
-              Text("Default: admin admin", textAlign: TextAlign.center, style: TextStyle(color: Warna.putih),),
-
-
-              BlocListener(
-                  bloc: doLoginBloc,
-                  listener: (BuildContext context, String state) {
-                    debugPrint(state);
-                    if (state == KonstanString.aksesAdmin || state == KonstanString.aksesTamu ) {
-                      spBloc.simpanJenisAkses(state.toString());
-                      Navigator.popAndPushNamed(context, '/home');
-                    }else{
-                      doLoginBloc.snackBar(context, state);
-                    }
-                  },
-
-                  child: BlocBuilder<DoLoginBloc, String>(
-                      builder: (context, hasil) {
-                        if (hasil==  KonstanString.LOGIN_OK){
-                          return Container();
-                        }else{
-                          return Container();
-                        }
-                      }
-                  )
-              ),
-
-            ],
+        Opacity( //semi red cl// ippath with more height and with 0.5 opacity
+          opacity: 0.8,
+          child: ClipPath(
+            clipper:BottomWaveClipper(), //set our custom wave clipper
+            child:Container(
+              color:Colors.blue,
+              height:200,
+            ),
           ),
+        ),
+
+        ClipPath(  //upper clippath with less height
+          clipper:BottomWaveClipper(), //set our custom wave clipper.
+          child:Container(
+              padding: EdgeInsets.only(bottom: 50),
+              color:Colors.blue,
+              height:180,
+              alignment: Alignment.center,
+
+          ),
+        ),
+
+        Container(
+            padding: EdgeInsets.all(40),
+
+            child: Form(
+              key: _formKey,
+              child: ListView(
+                children: <Widget>[
+
+                  Text("LOGIN",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 30,
+                        color: Colors.white
+                    ),
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.only(top: 80),
+                  ),
+
+                  TextFormField(
+
+                    decoration: InputDecoration(
+                      labelText: "Username",
+                    ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return KonstanString.kolomHarusDiisi;
+                      }
+                      return null;
+                    },
+                    controller: doLoginBloc.tecEmail,
+                  ),
+
+                  TextFormField(
+
+                    decoration: InputDecoration(
+                      labelText: "Password",
+                    ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return KonstanString.kolomHarusDiisi;
+                      }
+                      return null;
+                    },
+                    controller: doLoginBloc.tecPassword,
+                    obscureText: true,
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.only(top: 20),
+                  ),
+
+
+                  InkWell(
+                    onTap: (){
+                      if (_formKey.currentState.validate()) {
+                        LoginModel l = doLoginBloc.createLoginModel();
+                        doLoginBloc.dispatch(l);
+                      }
+                    },
+                    child: Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                          color: Colors.orange,
+                          shape: BoxShape.circle
+                      ),
+                      child: Center(
+                        child: Icon(Icons.arrow_forward, color: Colors.white,),
+                      ),
+                    ),
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.only(top: 20),
+                  ),
+
+
+
+                  Text("Default: admin admin", textAlign: TextAlign.center, style: TextStyle(color: Warna.putih),),
+
+                  BlocListener(
+                      bloc: doLoginBloc,
+                      listener: (BuildContext context, String state) {
+                        debugPrint(state);
+                        if (state == KonstanString.aksesAdmin || state == KonstanString.aksesTamu ) {
+                          spBloc.simpanJenisAkses(state.toString());
+                          Navigator.popAndPushNamed(context, '/home');
+                        }else{
+                          doLoginBloc.snackBar(context, state);
+                        }
+                      },
+
+                      child: BlocBuilder<DoLoginBloc, String>(
+                          builder: (context, hasil) {
+                            if (hasil==  KonstanString.LOGIN_OK){
+                              return Container();
+                            }else{
+                              return Container();
+                            }
+                          }
+                      )
+                  ),
+
+                ],
+              ),
+            )
         )
+
+      ],
+
     );
   }
 }
+
+

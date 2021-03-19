@@ -38,7 +38,6 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(
           color: Warna.kuning,
         ),
-        cardColor: Warna.kuning,
         scaffoldBackgroundColor: Warna.hitam1,
         buttonColor: Warna.kuning,
         primaryColor: Warna.pink,

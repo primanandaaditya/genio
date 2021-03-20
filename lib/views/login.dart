@@ -41,8 +41,7 @@ class View extends StatelessWidget {
 
     doLoginBloc = BlocProvider.of<DoLoginBloc>(context);
     spBloc=BlocProvider.of<SpBloc>(context);
-    doLoginBloc.tecEmail.text="admin";
-    doLoginBloc.tecPassword.text="admin";
+
 
     return Stack(
 

@@ -65,7 +65,7 @@ class _ListStafState extends State<ListStaf> {
 
         },
       ),
-      appBar: AppBar(title: Text("Daftar User"),),
+      appBar: AppBar(title: Text("Role"),),
       body: Container(
         child:  BlocBuilder<SpBloc, String>(
             builder: (context, jenisAkses) {

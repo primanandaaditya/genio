@@ -156,6 +156,11 @@ class View extends StatelessWidget {
                           }
                         },
                         child: Text("Edit"),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(18.0),
+                            side: BorderSide(color: Colors.orange)
+                        ),
+                        textColor: Colors.white,
 
                       ),
 

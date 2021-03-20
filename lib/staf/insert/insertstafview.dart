@@ -40,9 +40,6 @@ class View extends StatelessWidget {
 
               ),
               controller: insertStafBloc.tecNIK,
-              style: TextStyle(
-                  color: Colors.white
-              ),
             ),
 
             TextFormField(
@@ -50,9 +47,6 @@ class View extends StatelessWidget {
               decoration: InputDecoration(
                   icon: Icon(Icons.people, color: Warna.putih,),
                   hintText: "Nama staf"
-              ),
-              style: TextStyle(
-                  color: Colors.white
               ),
               controller: insertStafBloc.tecNama,
               validator: (value) {
@@ -67,9 +61,6 @@ class View extends StatelessWidget {
                   icon: Icon(Icons.email, color: Warna.putih,),
                   hintText: "Email"
               ),
-              style: TextStyle(
-                  color: Colors.white
-              ),
               controller: insertStafBloc.tecEmail,
               validator: (value) {
                 if (value.isEmpty) {
@@ -83,9 +74,6 @@ class View extends StatelessWidget {
                   icon: Icon(Icons.security, color: Warna.putih,),
                   hintText: "Password"
               ),
-              style: TextStyle(
-                  color: Colors.white
-              ),
               controller: insertStafBloc.tecPassword,
               validator: (value) {
                 if (value.isEmpty) {
@@ -95,9 +83,6 @@ class View extends StatelessWidget {
               },
             ),
             TextFormField(
-              style: TextStyle(
-                  color: Colors.white
-              ),
               decoration: InputDecoration(
                 icon: Icon(Icons.phone, color: Warna.putih,),
                 hintText: "Nomor telepon"
@@ -119,6 +104,11 @@ class View extends StatelessWidget {
                 }
               },
               child: Text("Simpan"),
+              shape: RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(18.0),
+                  side: BorderSide(color: Colors.orange)
+              ),
+              textColor: Colors.white,
             ),
 
             BlocListener(

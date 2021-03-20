@@ -58,9 +58,6 @@ class View extends StatelessWidget {
                   hintText: "NIK"
               ),
               controller: updateStafBloc.tecNIK,
-              style: TextStyle(
-                  color: Colors.white
-              ),
             ),
             TextFormField(
               decoration: InputDecoration(
@@ -74,9 +71,6 @@ class View extends StatelessWidget {
                 }
                 return null;
               },
-              style: TextStyle(
-                  color: Colors.white
-              ),
             ),
             TextFormField(
               decoration: InputDecoration(
@@ -90,9 +84,6 @@ class View extends StatelessWidget {
                 }
                 return null;
               },
-              style: TextStyle(
-                  color: Colors.white
-              ),
             ),
             TextFormField(
               decoration: InputDecoration(
@@ -106,9 +97,6 @@ class View extends StatelessWidget {
                 }
                 return null;
               },
-              style: TextStyle(
-                  color: Colors.white
-              ),
             ),
             TextFormField(
               decoration: InputDecoration(
@@ -116,9 +104,6 @@ class View extends StatelessWidget {
                 hintText: "Nomor telepon"
               ),
               controller: updateStafBloc.tecTelepon,
-              style: TextStyle(
-                  color: Colors.white
-              ),
             ),
 
             Padding(
@@ -135,6 +120,11 @@ class View extends StatelessWidget {
                 }
               },
               child: Text("Edit"),
+              shape: RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(18.0),
+                  side: BorderSide(color: Colors.orange)
+              ),
+              textColor: Colors.white,
 
             ),
 

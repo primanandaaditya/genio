@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
           color: Warna.kuning,
         ),
         scaffoldBackgroundColor: Warna.hitam1,
-        buttonColor: Warna.kuning,
+        buttonColor: Colors.deepOrange,
         primaryColor: Warna.pink,
         backgroundColor: Warna.hitam1,
         floatingActionButtonTheme: FloatingActionButtonThemeData(

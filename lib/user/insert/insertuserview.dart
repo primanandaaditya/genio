@@ -80,9 +80,6 @@ class View extends StatelessWidget {
                           }
                           return null;
                         },
-                        style: TextStyle(
-                            color: Colors.blue
-                        ),
 
                       ),
 
@@ -103,9 +100,6 @@ class View extends StatelessWidget {
                           }
                           return null;
                         },
-                        style: TextStyle(
-                            color: Colors.blue
-                        ),
                       ),
 
                       DropdownButtonFormField(
@@ -125,9 +119,6 @@ class View extends StatelessWidget {
                           }
                           return null;
                         },
-                        style: TextStyle(
-                            color: Colors.blue
-                        ),
                       ),
 
                       Padding(
@@ -143,6 +134,11 @@ class View extends StatelessWidget {
                           }
                         },
                         child: Text("Simpan"),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(18.0),
+                            side: BorderSide(color: Colors.orange)
+                        ),
+                        textColor: Colors.white,
 
                       ),
 

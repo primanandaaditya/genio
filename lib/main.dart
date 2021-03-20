@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:manajemen/helper/databasehelper.dart';
 import 'package:manajemen/home/homeview.dart';
+import 'package:manajemen/splash/SplashScreen.dart';
 import 'package:manajemen/staf/insert/insertstafview.dart';
 import 'package:manajemen/staf/list/liststaf.dart';
 import 'package:manajemen/user/list/listuser.dart';
@@ -70,7 +71,7 @@ class MyApp extends StatelessWidget {
             fillColor: Warna.hitam2),
 
       ),
-      home: LoginView(),
+      home: SplashScreen(),
     );
   }
 }
